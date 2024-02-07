@@ -1,0 +1,98 @@
+html, body {
+  margin:0;
+  padding:0;
+}
+
+@property --scrollYProp {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: false
+}
+
+@property --scrollXProp {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: false
+}
+
+#scroll_container {
+  height:200px;
+  scroll-timeline: --scrollXTimeline x;
+  scroll-timeline: --scrollYTimeline y;
+  overflow:scroll;
+}
+
+#scroll_contents {
+  height: 1000px;
+  background: repeating-linear-gradient(45deg,
+      #606dbc,
+      #606dbc 10px,
+      #465298 10px,
+      #465298 20px);
+}
+
+#dummy_x, #dummy_y {
+  width:100px;
+  height:100px;
+  background-color: green;
+  position:fixed;
+}
+
+#dummy_x {
+  left:100px;
+  animation-name: testAnimationX;
+  animation-timeline: --scrollXTimeline;
+  top:var(--scrollXProp);
+}
+
+@keyframes testAnimationX {
+  from {
+    --scrollXProp: 0;
+  }
+
+  to {
+    --scrollXProp: 1;
+  }
+}
+
+#dummy_y {
+  left:200px;
+  animation-name: testAnimationY;
+  animation-timeline: --scrollYTimeline;
+  top:100px;
+  top:calc(var(--scrollYProp) * 100px);
+}
+
+@keyframes testAnimationY {
+  from {
+    --scrollYProp: 0;
+    background-color:aqua;
+  }
+
+  to {
+    --scrollYProp: 1;
+    background-color:red;
+  }
+}
+
+#square {
+  animation-name: testAnimation;
+  animation-timeline: --scrollYTimeline;
+  animation-duration: 1ms; /* Firefox requires this to apply the animation */
+
+  background-color: deeppink;
+  transform:rotate(calc((var(--scrollXProp) + var(--scrollYProp)) * 1deg ));
+  width: 100px;
+  height: 100px;
+  position:fixed;
+}
+
+@keyframes testAnimation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
