@@ -1,37 +1,37 @@
-html, body {
-  margin:0;
-  padding:0;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
 }
 
-@property --scrollYProp {
+body {
+  timeline-scope: --scrollXTimeline, --scrollYTimeline;
+}
+
+@property --sY {
   syntax: "<number>";
   initial-value: 0;
   inherits: false
 }
 
-@property --scrollXProp {
+@property --sX {
   syntax: "<number>";
   initial-value: 0;
   inherits: false
 }
 
-#scroll_container_x, #scroll_container_y {
-  height:200px;
-  width:200px;
-  overflow:scroll;
-}
-
-#scroll_container_x {
-  scroll-timeline: --scrollXTimeline x;
-}
-
-#scroll_container_y {
-  scroll-timeline: --scrollYTimeline y;
+#scroll_container {
+  height: 100%;
+  width: 100%;
+  overflow: scroll;
+  scroll-timeline: --scrollXTimeline x, --scrollYTimeline y;
 }
 
 #scroll_contents {
-  height: 1000px;
-  width:1000px;
+  height: 300%;
+  width: 300%;
   background: repeating-linear-gradient(45deg,
       #606dbc,
       #606dbc 10px,
@@ -39,60 +39,34 @@ html, body {
       #465298 20px);
 }
 
-#dummy_x, #dummy_y {
-  width:100px;
-  height:100px;
-  background-color: green;
-  position:fixed;
-}
-
-#dummy_x {
-  left:100px;
-  animation-name: testAnimationX;
-  animation-timeline: --scrollXTimeline;
-  top:calc(var(--scrollXProp) * 100px);
-}
-
-@keyframes testAnimationX {
+@keyframes scrollYAnimation {
   from {
-    --scrollXProp: 0;
-    /*background-color:aqua;*/
+    --sY: 0;
   }
 
   to {
-    --scrollXProp: 1;
-    /*background-color:red;*/
+    --sY: 1;
   }
 }
 
-#dummy_y {
-  left:200px;
-  animation-name: testAnimationY;
-  animation-timeline: --scrollYTimeline;
-  left:calc(var(--scrollYProp) * 100px);
-}
-
-@keyframes testAnimationY {
+@keyframes scrollXAnimation {
   from {
-    --scrollYProp: 0;
-    /*background-color:aqua;*/
+    --sX: 0;
   }
 
   to {
-    --scrollYProp: 1;
-    /*background-color:red;*/
+    --sX: 1;
   }
 }
 
 #square {
-  /*animation-timeline: --scrollYTimeline;
-  animation-duration: 1ms; /* Firefox requires this to apply the animation */
-
+  animation-name: scrollXAnimation, scrollYAnimation;
+  animation-timeline: --scrollXTimeline, --scrollYTimeline;
   background-color: deeppink;
-  /*transform:rotate(calc((var(--scrollXProp) + var(--scrollYProp)) * 100deg ));*/
-  /*transform:rotate(calc(var(--scrollYProp) * 100deg ));*/
-  left: calc(var(--scrollYProp) * 100px);
+  transform: rotate(calc(( var(--sY) + var(--sX)) * 100deg));
+  pointer-events: none;
+
   width: 100px;
   height: 100px;
-  position:fixed;
+  position: fixed;
 }
