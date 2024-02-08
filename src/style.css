@@ -15,15 +15,23 @@ html, body {
   inherits: false
 }
 
-#scroll_container {
+#scroll_container_x, #scroll_container_y {
   height:200px;
-  scroll-timeline: --scrollXTimeline x;
-  scroll-timeline: --scrollYTimeline y;
+  width:200px;
   overflow:scroll;
+}
+
+#scroll_container_x {
+  scroll-timeline: --scrollXTimeline x;
+}
+
+#scroll_container_y {
+  scroll-timeline: --scrollYTimeline y;
 }
 
 #scroll_contents {
   height: 1000px;
+  width:1000px;
   background: repeating-linear-gradient(45deg,
       #606dbc,
       #606dbc 10px,
@@ -42,16 +50,18 @@ html, body {
   left:100px;
   animation-name: testAnimationX;
   animation-timeline: --scrollXTimeline;
-  top:var(--scrollXProp);
+  top:calc(var(--scrollXProp) * 100px);
 }
 
 @keyframes testAnimationX {
   from {
     --scrollXProp: 0;
+    /*background-color:aqua;*/
   }
 
   to {
     --scrollXProp: 1;
+    /*background-color:red;*/
   }
 }
 
@@ -59,40 +69,30 @@ html, body {
   left:200px;
   animation-name: testAnimationY;
   animation-timeline: --scrollYTimeline;
-  top:100px;
-  top:calc(var(--scrollYProp) * 100px);
+  left:calc(var(--scrollYProp) * 100px);
 }
 
 @keyframes testAnimationY {
   from {
     --scrollYProp: 0;
-    background-color:aqua;
+    /*background-color:aqua;*/
   }
 
   to {
     --scrollYProp: 1;
-    background-color:red;
+    /*background-color:red;*/
   }
 }
 
 #square {
-  animation-name: testAnimation;
-  animation-timeline: --scrollYTimeline;
+  /*animation-timeline: --scrollYTimeline;
   animation-duration: 1ms; /* Firefox requires this to apply the animation */
 
   background-color: deeppink;
-  transform:rotate(calc((var(--scrollXProp) + var(--scrollYProp)) * 1deg ));
+  /*transform:rotate(calc((var(--scrollXProp) + var(--scrollYProp)) * 100deg ));*/
+  /*transform:rotate(calc(var(--scrollYProp) * 100deg ));*/
+  left: calc(var(--scrollYProp) * 100px);
   width: 100px;
   height: 100px;
   position:fixed;
-}
-
-@keyframes testAnimation {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
 }

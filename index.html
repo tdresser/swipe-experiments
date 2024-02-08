@@ -1,18 +1,25 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gesture Timeline</title>
-  </head>
-  <body>
-    <div id="scroll_container">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gesture Timeline</title>
+</head>
+
+<body>
+  <div id="scroll_container_x">
+    <div id="scroll_container_y">
       <div id="scroll_contents">
-        <div id="dummy_x"></div>
-        <div id="dummy_y"></div>
-        <div id="square"></div>
+        <div id="dummy_x">
+          <div id="dummy_y">
+            <div id="square"></div>
+          </div>
+        </div>
       </div>
     </div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>
