@@ -18,6 +18,18 @@ body {
   z-index:2;
 }
 
+@property --viewportWidthPx {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: false
+}
+
+@property --viewportHeightPx {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: false
+}
+
 @property --sY {
   syntax: "<number>";
   initial-value: 0;
@@ -48,7 +60,6 @@ body {
   inherits: false
 }
 
-
 #scroll_container {
   height: 100%;
   width: 100%;
@@ -57,7 +68,7 @@ body {
 }
 
 #scroll_contents {
-  height: calc(100vh + 30px);
+  height: 300vh;
   width: 300vw;
   background: repeating-linear-gradient(45deg,
       #606dbc,
@@ -66,19 +77,9 @@ body {
       #465298 20px);
 }
 
-@keyframes scrollYAnimation {
-  from {
-    --sY: 0;
-  }
-
-  to {
-    --sY: 1;
-  }
-}
-
 @keyframes scrollXAnimation {
   from {
-    --sX: 0;
+    --sX: -1;
   }
 
   to {
@@ -86,17 +87,30 @@ body {
   }
 }
 
+@keyframes scrollYAnimation {
+  from {
+    --sY: -1;
+  }
+
+  to {
+    --sY: 1;
+  }
+}
+
 #square {
   animation-fill-mode: both;
+  animation-timing-function: linear;
   animation-name: scrollXAnimation, scrollYAnimation;
   animation-timeline: --scrollXTimeline, --scrollYTimeline;
-  --sDist: calc(hypot(var(--sX), var(--sY)) / sqrt(2));
-  --XsizeMultiplier: calc(1 - pow(var(--sDist),3)*0.8);
-  --YsizeMultiplier: calc(1 - pow(var(--sDist),3)*0.99);
+  --sDist: calc(hypot(var(--sX) * var(--viewportWidthPx), var(--sY) * var(--viewportHeightPx)));
+  --XsizeMultiplier: calc(1 - 0.66*pow(clamp(0, var(--sDist), 30)/30, 3));
+  --YsizeMultiplier: calc(1 - 0.8*pow(clamp(0, var(--sDist), 30)/30, 3));
 
 
   background-color: deeppink;
-  transform: scale(var(--XsizeMultiplier), var(--YsizeMultiplier));
+  /*transform: translate(var(--XsizeMultiplier) * var(--viewportWidthPx) * 1px, 100px) scale(var(--XsizeMultiplier), var(--YsizeMultiplier));*/
+  transform: translate(calc(var(--sX) * var(--viewportWidthPx) * -1/3px),
+                       100px) scale(var(--XsizeMultiplier), var(--YsizeMultiplier));
   pointer-events: none;
 
   width: 100%;

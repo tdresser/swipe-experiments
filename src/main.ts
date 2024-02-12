@@ -5,8 +5,21 @@ export function fail(): never {
 }
 let square = document.getElementById("square") ?? fail();
 let debug = document.getElementById("debug") ?? fail();
+let scroll_container = document.getElementById("scroll_container") ?? fail();
 
-const props = ["sX", "sY", "sDist", "XsizeMultiplier", "YsizeMultiplier"];
+const props = ["sX", "sY", "sDist",
+  "XsizeMultiplier", "YsizeMultiplier",
+];
+
+function setProperty(name: string, value: number) {
+  props.push(name);
+  square.style.setProperty('--' + name, value + "");
+}
+
+setProperty("viewportWidthPx", window.innerWidth);
+setProperty("viewportHeightPx", window.innerHeight);
+scroll_container.scrollLeft = window.innerWidth;
+scroll_container.scrollTop = window.innerHeight;
 
 function update() {
   window.requestAnimationFrame(update);
