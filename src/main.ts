@@ -35,18 +35,12 @@ function update() {
 // Listen for firstPointerMove to exclude touch slop (the distance the pointer moves before we call this a scroll).
 function firstPointerMoveListener(e:PointerEvent) {
   scroll_container.removeEventListener("pointermove", firstPointerMoveListener);
-  // Relative to the middle of the viewport.
-  setProperty("pointerDownX", e.clientX/* - window.innerWidth / 2*/);
-  setProperty("pointerDownY", e.clientY/* - window.innerHeight / 2*/);
+  setProperty("pointerDownX", e.clientX);
+  setProperty("pointerDownY", e.clientY);
 }
 
 scroll_container.addEventListener("pointerdown", (_:Event) => {
   scroll_container.addEventListener("pointermove", firstPointerMoveListener);
-});
-
-scroll_container.addEventListener("scrollend", () => {
-  //setProperty("pointerDownX", 0);
-  //setProperty("pointerDownY", 0);
 });
 
 update();

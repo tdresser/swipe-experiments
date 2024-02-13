@@ -15,7 +15,7 @@ body {
 
 #debug {
   position:fixed;
-  z-index:2;
+  z-index:3;
 }
 
 /* TODO: use CSS.registerProperty({
@@ -125,6 +125,7 @@ body {
 }
 
 #square {
+  z-index: 2;
   pointer-events: none;
   animation-fill-mode: both;
   animation-timing-function: linear;
@@ -144,16 +145,12 @@ body {
 
 
   background-color: deeppink;
-  /*transform: translate(var(--XsizeMultiplier) * var(--viewportWidthPx) * 1px, 100px) scale(var(--XsizeMultiplier), var(--YsizeMultiplier));*/
   transform-origin: calc(var(--pointerDownX) * 1px) calc(var(--pointerDownY) * 1px);
   transform: translate(
     calc(var(--sX) * var(--viewportWidthPx) * -1px),
     calc(var(--sY) * var(--viewportHeightPx) * -1px)
   )
   scale(var(--XsizeMultiplier), var(--YsizeMultiplier));
-
-  /*transition: --pointerDownX 400ms ease-in-out,
-              --pointerDownY 400ms ease-in-out;*/
 
   width: 100%;
   height: 100%;

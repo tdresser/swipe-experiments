@@ -4,4 +4,4 @@ Things that are annoying:
 - Implicit root scrollers.
 - Scroll rails.
 - Calc not accepting that calc(1px/1px) should be a <number>.
--
+- No stateful calc. Maybe could have `maxValueSeen(var(--foo))`?
