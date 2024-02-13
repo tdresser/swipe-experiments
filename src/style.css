@@ -18,6 +18,14 @@ body {
   z-index:2;
 }
 
+/* TODO: use CSS.registerProperty({
+      name: "--o",
+      syntax: "<number>",
+      initialValue: 0,
+      inherits: "false"
+   });
+   */
+
 @property --viewportWidthPx {
   syntax: "<number>";
   initial-value: 0;
@@ -111,11 +119,16 @@ body {
 }
 
 #square {
+  pointer-events: none;
   animation-fill-mode: both;
   animation-timing-function: linear;
   animation-name: scrollXAnimation, scrollYAnimation;
   animation-timeline: --scrollXTimeline, --scrollYTimeline;
-  --sDist: calc(hypot(var(--sX) * var(--viewportWidthPx), var(--sY) * var(--viewportHeightPx)));
+  /* Distance from the center */
+  --sDist: calc(hypot(
+          var(--sX) * var(--viewportWidthPx),
+          var(--sY) * var(--viewportHeightPx)
+  ));
   --XsizeMultiplier: calc(0.4 + 0.6 * (0.5 + 0.5*(cos(pi *
       (clamp(0, var(--sDist), 80)/80)
   ))));
@@ -126,9 +139,14 @@ body {
 
   background-color: deeppink;
   /*transform: translate(var(--XsizeMultiplier) * var(--viewportWidthPx) * 1px, 100px) scale(var(--XsizeMultiplier), var(--YsizeMultiplier));*/
-  transform: translate(calc(var(--sX) * var(--viewportWidthPx) * -1px + var(--pointerDownX) * 1px),
-                       calc(var(--sY) * var(--viewportHeightPx) * -1px + var(--pointerDownY) * 1px))
-             scale(var(--XsizeMultiplier), var(--YsizeMultiplier));
+  transform: translate(
+    calc(var(--sX) * var(--viewportWidthPx) * -1px + var(--pointerDownX) * 1px * (1 - hypot(var(--sX), var(--sY)/sqrt(2)))),
+    calc(var(--sY) * var(--viewportHeightPx) * -1px + var(--pointerDownY) * 1px * (1 - hypot(var(--sX), var(--sY))/sqrt(2)))
+  )
+  scale(var(--XsizeMultiplier), var(--YsizeMultiplier));
+
+  /*transition: --pointerDownX 400ms ease-in-out,
+              --pointerDownY 400ms ease-in-out;*/
 
   width: 100%;
   height: 100%;

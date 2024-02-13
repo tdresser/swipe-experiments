@@ -40,8 +40,13 @@ function firstPointerMoveListener(e:PointerEvent) {
   setProperty("pointerDownY", e.clientY - window.innerHeight / 2);
 }
 
-scroll_container.addEventListener("pointerdown", (e:Event) => {
+scroll_container.addEventListener("pointerdown", (_:Event) => {
   scroll_container.addEventListener("pointermove", firstPointerMoveListener);
+});
+
+scroll_container.addEventListener("scrollend", () => {
+  //setProperty("pointerDownX", 0);
+  //setProperty("pointerDownY", 0);
 });
 
 update();
