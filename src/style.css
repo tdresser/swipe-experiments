@@ -60,11 +60,24 @@ body {
   inherits: false
 }
 
+@property --pointerDownX {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: false
+}
+
+@property --pointerDownY {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: false
+}
+
 #scroll_container {
   height: 100%;
   width: 100%;
   overflow: scroll;
   scroll-timeline: --scrollXTimeline x, --scrollYTimeline y;
+  scroll-snap-type: both mandatory;
 }
 
 #scroll_contents {
@@ -103,18 +116,31 @@ body {
   animation-name: scrollXAnimation, scrollYAnimation;
   animation-timeline: --scrollXTimeline, --scrollYTimeline;
   --sDist: calc(hypot(var(--sX) * var(--viewportWidthPx), var(--sY) * var(--viewportHeightPx)));
-  --XsizeMultiplier: calc(1 - 0.66*pow(clamp(0, var(--sDist), 80)/80, 3));
-  --YsizeMultiplier: calc(1 - 0.8*pow(clamp(0, var(--sDist), 80)/80, 3));
+  --XsizeMultiplier: calc(0.4 + 0.6 * (0.5 + 0.5*(cos(pi *
+      (clamp(0, var(--sDist), 80)/80)
+  ))));
+  --YsizeMultiplier: calc(0.2 + 0.8 * (0.5 + 0.5*(cos(pi *
+    (clamp(0, var(--sDist), 80)/80)
+  ))));
 
 
   background-color: deeppink;
   /*transform: translate(var(--XsizeMultiplier) * var(--viewportWidthPx) * 1px, 100px) scale(var(--XsizeMultiplier), var(--YsizeMultiplier));*/
-  transform: translate(calc(var(--sX) * var(--viewportWidthPx) * -1px),
-                       calc(var(--sY) * var(--viewportHeightPx) * -1px))
+  transform: translate(calc(var(--sX) * var(--viewportWidthPx) * -1px + var(--pointerDownX) * 1px),
+                       calc(var(--sY) * var(--viewportHeightPx) * -1px + var(--pointerDownY) * 1px))
              scale(var(--XsizeMultiplier), var(--YsizeMultiplier));
-  pointer-events: none;
 
   width: 100%;
   height: 100%;
   position: fixed;
+}
+
+.spacer {
+  width:100vw;
+  height:100vh;
+  position:relative;
+  left: 100vw;
+  top: 100vh;
+  z-index: 3;
+  scroll-snap-align: center;
 }
