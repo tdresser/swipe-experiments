@@ -36,8 +36,8 @@ function update() {
 function firstPointerMoveListener(e:PointerEvent) {
   scroll_container.removeEventListener("pointermove", firstPointerMoveListener);
   // Relative to the middle of the viewport.
-  setProperty("pointerDownX", e.clientX - window.innerWidth / 2);
-  setProperty("pointerDownY", e.clientY - window.innerHeight / 2);
+  setProperty("pointerDownX", e.clientX/* - window.innerWidth / 2*/);
+  setProperty("pointerDownY", e.clientY/* - window.innerHeight / 2*/);
 }
 
 scroll_container.addEventListener("pointerdown", (_:Event) => {
