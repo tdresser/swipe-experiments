@@ -83,20 +83,25 @@ body {
 #scroll_container {
   height: 100%;
   width: 100%;
+  opacity: 0.99; /* Avoid being an 'implicit root scroller', to prevent omnibox hiding. */
   overflow: scroll;
   scroll-timeline: --scrollXTimeline x, --scrollYTimeline y;
   scroll-snap-type: both mandatory;
   overscroll-behavior: none;
+  background: repeating-linear-gradient(45deg,
+    #606dbc,
+    #606dbc 10px,
+    #465298 10px,
+    #465298 20px);
+}
+
+#scroll_container::-webkit-scrollbar {
+  display: none;
 }
 
 #scroll_contents {
   height: 300svh;
   width: 300svw;
-  background: repeating-linear-gradient(45deg,
-      #606dbc,
-      #606dbc 10px,
-      #465298 10px,
-      #465298 20px);
 }
 
 @keyframes scrollXAnimation {
