@@ -86,6 +86,7 @@ body {
   overflow: scroll;
   scroll-timeline: --scrollXTimeline x, --scrollYTimeline y;
   scroll-snap-type: both mandatory;
+  overscroll-behavior: none;
 }
 
 #scroll_contents {
